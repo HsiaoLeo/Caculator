@@ -45,9 +45,11 @@ function postfixCal(pofix){
             case '*':
             case '/':
                 tempStack.push(opcal(tempStack,op))
+                break;
             default:
                 tempStack.push(Number(op));
                 break;
         }
     }
+    return tempStack.pop();
 }

@@ -1,11 +1,15 @@
 function getp(op){
-    switch(op){
-        case '*':case '/':
+    switch(true){
+        case /^\^$/.test(op):
+            return 3;
+        case /^(\*|\/)$/.test(op):
             return 2;
-        case '+':case '-':
+        case /^(\+|-)$/.test(op):
             return 1;
-        default:
+        case /^\d*(\.\d+)?$/.test(op):
             return 0;
+        default:
+            return -1;
     }
 }
 function infixToPofix(infix){
@@ -44,7 +48,8 @@ function infixToPofix(infix){
 function opcal(st,operator){
     let operand2=st.pop();
     let operand1=st.pop();
-    return eval(`${operand1}${operator}${operand2}`)
+    if(operator==='^')return Math.pow(operand1,operand2);
+    else return eval(`${operand1}${operator}${operand2}`)
 }
 function postfixCal(pofix){
     let tempStack=[];

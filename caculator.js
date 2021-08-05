@@ -9,11 +9,21 @@ function getp(op){
     }
 }
 function infixToPofix(infix){
-    let infixArr=infix.split(/\s*/);
+    let infixArr=infix.split(/\s+/);
     let operatorStack=[];
     let output=[];
     for(let op of infixArr){
-        if(getp(op)>0){
+        if(op==='('){
+            operatorStack.push(op);
+        }
+        else if(op===')'){
+            while(true){
+                let p=operatorStack.pop();
+                if(p==='(')break;
+                output.push(p);
+            }
+        }
+        else if(getp(op)>0){
             while(operatorStack.length>0){
                       let topop=operatorStack.pop();
                       if(getp(op)<=getp(topop)){
@@ -39,7 +49,11 @@ function opcal(st,operator){
 function postfixCal(pofix){
     let tempStack=[];
     for(let op of pofix){
+<<<<<<< HEAD
         if(getp(op)>0) tempStack.push(opcal(tempStack,op))
+=======
+        if(getp(op)>0)tempStack.push(opcal(tempStack,op))
+>>>>>>> b2cc120 (some condition optimization)
         else tempStack.push(Number(op));
     }
     return tempStack.pop();

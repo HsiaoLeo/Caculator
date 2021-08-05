@@ -39,17 +39,8 @@ function opcal(st,operator){
 function postfixCal(pofix){
     let tempStack=[];
     for(let op of pofix){
-        switch(op){
-            case '+':
-            case '-':
-            case '*':
-            case '/':
-                tempStack.push(opcal(tempStack,op))
-                break;
-            default:
-                tempStack.push(Number(op));
-                break;
-        }
+        if(getp(op)>0)tempStack.push(opcal(tempStack,op))
+        else tempStack.push(Number(op));
     }
     return tempStack.pop();
 }

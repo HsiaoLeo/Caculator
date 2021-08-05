@@ -1,5 +1,7 @@
 function getp(op){
     switch(op){
+        case '^':
+            return 3;
         case '*':case '/':
             return 2;
         case '+':case '-':
@@ -44,7 +46,8 @@ function infixToPofix(infix){
 function opcal(st,operator){
     let operand2=st.pop();
     let operand1=st.pop();
-    return eval(`${operand1}${operator}${operand2}`)
+    if(operator==='^')return Math.pow(operand1,operand2);
+    else return eval(`${operand1}${operator}${operand2}`)
 }
 function postfixCal(pofix){
     let tempStack=[];

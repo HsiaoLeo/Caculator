@@ -1,13 +1,15 @@
 function getp(op){
-    switch(op){
-        case '^':
+    switch(true){
+        case /^\^$/.test(op):
             return 3;
-        case '*':case '/':
+        case /^(\*|\/)$/.test(op):
             return 2;
-        case '+':case '-':
+        case /^(\+|-)$/.test(op):
             return 1;
-        default:
+        case /^\d*(\.\d+)?$/.test(op):
             return 0;
+        default:
+            return -1;
     }
 }
 function infixToPofix(infix){

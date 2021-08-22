@@ -1,3 +1,15 @@
+/*
+* max: 999999999999
+* min: -999999999999
+*/
+const MAX_NUM=999999999999;
+const MIN_NUM=-999999999999;
+
+function safeResult(result){
+    if(result>MAX_NUM)return MAX_NUM;
+    else if(result<MIN_NUM)return MIN_NUM;
+    return result
+}
 function getp(op){
     switch(true){
         case /^\^$/.test(op):
@@ -6,17 +18,28 @@ function getp(op){
             return 2;
         case /^(\+|-)$/.test(op):
             return 1;
-        case /^\d*(\.\d+)?$/.test(op):
+        case /^(([\+-]?\d*(\.\d+)?)|\(|\))$/.test(op):
             return 0;
         default:
             return -1;
     }
 }
+function validTest(infixArr){
+    let b_stack=[];
+    for(let op of infixArr){
+        if(getp(op)<0)return false;
+        if(op==="(")b_stack.push(op);
+        else if(op===")"){
+            if(b_stack.length===0)return false;
+            b_stack.pop();
+        }
+    }
+    return true;
+}
 function infixToPofix(infix){
-    let infixArr=infix.split(/\s+/);
     let operatorStack=[];
     let output=[];
-    for(let op of infixArr){
+    for(let op of infix){
         if(op==='('){
             operatorStack.push(op);
         }
@@ -49,17 +72,26 @@ function opcal(st,operator){
     let operand2=st.pop();
     let operand1=st.pop();
     if(operator==='^')return Math.pow(operand1,operand2);
-    else return eval(`${operand1}${operator}${operand2}`)
+    else return safeResult(eval(`${operand1}${operator}${operand2}`))
 }
 function postfixCal(pofix){
     let tempStack=[];
     for(let op of pofix){
-<<<<<<< HEAD
-        if(getp(op)>0) tempStack.push(opcal(tempStack,op))
-=======
         if(getp(op)>0)tempStack.push(opcal(tempStack,op))
+<<<<<<< HEAD
 >>>>>>> b2cc120 (some condition optimization)
+=======
+>>>>>>> 6b5d119 (update version 0.04)
         else tempStack.push(Number(op));
     }
     return tempStack.pop();
+}
+/*entry */
+function caculator(calStr){
+    let infixArr=calStr.split(/\s+/);
+    if(!validTest(infixArr)){
+        alert("invalid infix");
+        throw new Error("invalid infix");
+    }
+    return postfixCal(infixToPofix(infixArr));
 }

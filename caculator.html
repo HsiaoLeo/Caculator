@@ -6,8 +6,15 @@
         <script src="caculator.js"></script>
         <script>
             window.onload=function(){
-                let expression="( 1 + 2.3 ) ^ 4 * 5";
-                console.log(postfixCal(infixToPofix(expression)));
+                let expression="( 1 + 2.3 ) ^ 4 * +5";
+                let expression2="( 1 + 2.3 ) ^ 4 * -5";
+                try{
+                    console.log(caculator(expression))
+                    console.log(caculator(expression2))
+                }
+                catch(ex){
+                    console.log(ex.message);
+                }
             }
         </script>
     </head>

@@ -1,5 +1,8 @@
 # Caculator
 >
+> version 0.0.4
+>> add input validation(infix with space gap)
+>
 > version 0.0.3 
 >> add Exponentiation operator(^)
 >

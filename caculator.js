@@ -6,17 +6,21 @@ function getp(op){
             return 2;
         case /^(\+|-)$/.test(op):
             return 1;
-        case /^\d*(\.\d+)?$/.test(op):
+        case /^(([\+-]?\d*(\.\d+)?)|\(|\))$/.test(op):
             return 0;
         default:
             return -1;
     }
 }
+function caculator(calStr){
+    let infixArr=calStr.split(/\s+/);
+    if(!infixArr.every(elem=>getp(elem)>=0)) throw new Error("invalid infix");
+    return postfixCal(infixToPofix(infixArr));
+}
 function infixToPofix(infix){
-    let infixArr=infix.split(/\s+/);
     let operatorStack=[];
     let output=[];
-    for(let op of infixArr){
+    for(let op of infix){
         if(op==='('){
             operatorStack.push(op);
         }
@@ -54,11 +58,7 @@ function opcal(st,operator){
 function postfixCal(pofix){
     let tempStack=[];
     for(let op of pofix){
-<<<<<<< HEAD
-        if(getp(op)>0) tempStack.push(opcal(tempStack,op))
-=======
         if(getp(op)>0)tempStack.push(opcal(tempStack,op))
->>>>>>> 261676a765a73c0f39e2ae37ae369d4b8fbfc877
         else tempStack.push(Number(op));
     }
     return tempStack.pop();

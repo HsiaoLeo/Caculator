@@ -1,3 +1,15 @@
+/*
+* max: 999999999999
+* min: -999999999999
+*/
+const MAX_NUM=999999999999;
+const MIN_NUM=-999999999999;
+
+function safeResult(result){
+    if(result>MAX_NUM)return MAX_NUM;
+    else if(result<MIN_NUM)return MIN_NUM;
+    return result
+}
 function getp(op){
     switch(true){
         case /^\^$/.test(op):
@@ -18,16 +30,11 @@ function validTest(infixArr){
         if(getp(op)<0)return false;
         if(op==="(")b_stack.push(op);
         else if(op===")"){
-            if(b_stack.length===0)return -false;
+            if(b_stack.length===0)return false;
             b_stack.pop();
         }
     }
     return true;
-}
-function caculator(calStr){
-    let infixArr=calStr.split(/\s+/);
-    if(!validTest(infixArr)) throw new Error("invalid infix");
-    return postfixCal(infixToPofix(infixArr));
 }
 function infixToPofix(infix){
     let operatorStack=[];
@@ -65,7 +72,7 @@ function opcal(st,operator){
     let operand2=st.pop();
     let operand1=st.pop();
     if(operator==='^')return Math.pow(operand1,operand2);
-    else return eval(`${operand1}${operator}${operand2}`)
+    else return eval(`safeResult(${operand1}${operator}${operand2})`)
 }
 function postfixCal(pofix){
     let tempStack=[];
@@ -74,4 +81,10 @@ function postfixCal(pofix){
         else tempStack.push(Number(op));
     }
     return tempStack.pop();
+}
+/*entry */
+function caculator(calStr){
+    let infixArr=calStr.split(/\s+/);
+    if(!validTest(infixArr)) throw new Error("invalid infix");
+    return postfixCal(infixToPofix(infixArr));
 }

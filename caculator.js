@@ -12,9 +12,21 @@ function getp(op){
             return -1;
     }
 }
+function validTest(infixArr){
+    let b_stack=[];
+    for(let op of infixArr){
+        if(getp(op)<0)return false;
+        if(op==="(")b_stack.push(op);
+        else if(op===")"){
+            if(b_stack.length===0)return -false;
+            b_stack.pop();
+        }
+    }
+    return true;
+}
 function caculator(calStr){
     let infixArr=calStr.split(/\s+/);
-    if(!infixArr.every(elem=>getp(elem)>=0)) throw new Error("invalid infix");
+    if(!validTest(infixArr)) throw new Error("invalid infix");
     return postfixCal(infixToPofix(infixArr));
 }
 function infixToPofix(infix){

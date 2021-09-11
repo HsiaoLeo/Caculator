@@ -72,7 +72,7 @@ function opcal(st,operator){
     let operand2=st.pop();
     let operand1=st.pop();
     if(operator==='^')return Math.pow(operand1,operand2);
-    else return eval(`safeResult(${operand1}${operator}${operand2})`)
+    else return safeResult(eval(`${operand1}${operator}${operand2}`))
 }
 function postfixCal(pofix){
     let tempStack=[];
@@ -85,6 +85,9 @@ function postfixCal(pofix){
 /*entry */
 function caculator(calStr){
     let infixArr=calStr.split(/\s+/);
-    if(!validTest(infixArr)) throw new Error("invalid infix");
+    if(!validTest(infixArr)){
+        alert("invalid infix");
+        throw new Error("invalid infix");
+    }
     return postfixCal(infixToPofix(infixArr));
 }

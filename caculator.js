@@ -71,8 +71,9 @@ function infixToPofix(infix){
 function opcal(st,operator){
     let operand2=st.pop();
     let operand1=st.pop();
-    if(operator==='^')return Math.pow(operand1,operand2);
-    else return safeResult(eval(`${operand1}${operator}${operand2}`))
+    console.log(`${operand1}${operator}${operand2}`)
+    if(operator==='^')return safeResult(Math.pow(operand1,operand2));
+    else return safeResult(eval(`${operand1} ${operator} ${operand2}`))
 }
 function postfixCal(pofix){
     let tempStack=[];

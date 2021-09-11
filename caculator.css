@@ -1,0 +1,19 @@
+html{
+    font-size: 30px;
+}
+
+div.row{
+    text-align: center;
+    margin: 10px 0;
+}
+div.headinfo > span{
+    display: block;
+}
+div.inputarea > input[type='text']{
+    font-size: 30px;
+    width:80%;
+}
+div.inputarea > input[type='button']{
+    font-size: 30px;
+    cursor: pointer;
+}

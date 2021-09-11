@@ -1,4 +1,6 @@
 # Caculator
+> version 0.1.0
+>> add user input function
 >
 > version 0.0.4
 >> add input validation(infix with space gap)

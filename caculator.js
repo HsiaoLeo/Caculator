@@ -79,6 +79,13 @@ function postfixCal(pofix){
     let tempStack=[];
     for(let op of pofix){
         if(getp(op)>0)tempStack.push(opcal(tempStack,op))
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b2cc120 (some condition optimization)
+=======
+>>>>>>> 6b5d119 (update version 0.04)
+>>>>>>> 8ba3391b3db3f31befb0c39a01106ca53391bd71
         else tempStack.push(Number(op));
     }
     return tempStack.pop();

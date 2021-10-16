@@ -85,7 +85,8 @@ function postfixCal(pofix){
 }
 /*entry */
 function caculator(calStr){
-    let infixArr=calStr.split(/\s+/);
+    let expressionSpliter=/(?<=[^\.])(?=[^\d\.])|(?<=[^\d\.+-])(?=[^\.])|(?<![^\d].)(?=\.)|(?<=\d[+-])(?=\d)/
+    let infixArr=calStr.split(expressionSpliter);
     if(!validTest(infixArr)){
         alert("invalid infix");
         throw new Error("invalid infix");

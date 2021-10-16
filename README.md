@@ -1,4 +1,7 @@
 # Caculator
+> version 0.1.1
+>> now can input without whitespace gap
+>
 > version 0.1.0
 >> add user input function
 >

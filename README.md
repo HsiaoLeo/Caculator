@@ -1,4 +1,7 @@
 # Caculator
+> version 0.1.3
+>> whitespace gap in expression will be removed automatically
+>
 > version 0.1.2
 >> new input expression validation method
 >

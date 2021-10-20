@@ -1,4 +1,7 @@
 # Caculator
+> version 0.1.2
+>> new input expression validation method
+>
 > version 0.1.1
 >> now can input without whitespace gap
 >
@@ -15,5 +18,5 @@
 >> Quadratic operations on Numbers
 >
 > version 0.0.1
->> Quadratic operations on integers(no brackets)
+>> Quadratic operations on integers(no parentheses)
 >

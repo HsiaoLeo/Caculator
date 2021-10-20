@@ -215,7 +215,7 @@ function postfixCal(pofix){
 /*entry */
 function caculator(calStr){
     let expressionSpliter=/(?<=[^\.])(?=[^\d\.])|(?<=[^\d\.+-])(?=[^\.])|(?<![^\d].)(?=\.)|(?<=\d[+-])(?=\d)/
-    
+    calStr=calStr.replace(/\s/,"");
     if(!expressionValidation(calStr)){
         alert("invalid infix");
         throw new Error("invalid infix");

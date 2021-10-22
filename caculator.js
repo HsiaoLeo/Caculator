@@ -94,7 +94,6 @@ class parentheses{
         if(op==="(")return new parenthesesLeft();
         else return new parenthesesRight();
     }
-    }
 }
 class parenthesesLeft extends parentheses{
 }

@@ -14,14 +14,14 @@ class ExpressionElement{
             case operandRegex.test(elem):
                 return new operand(elem);
             default:
-                return new parentheses(elem);
+                return parentheses.createParentheses(elem);
         }
     }
 }
 class operand{
     value
     constructor(op){
-        this.value=Number(op);
+        this.value= safeResult(Number(op));
     }
 }
 class operator{
@@ -90,16 +90,20 @@ class expon extends operator{
     }
 }
 class parentheses{
-    type
-    constructor(op){
-        if(op==="(")this.type="left";
-        else this.type="right";
+    static createParentheses(op){
+        if(op==="(")return new parenthesesLeft();
+        else return new parenthesesRight();
     }
+    }
+}
+class parenthesesLeft extends parentheses{
+}
+class parenthesesRight extends parentheses{
 }
 
 
-const MAX_NUM=999999999999;
-const MIN_NUM=-999999999999;
+const MAX_NUM=1e12-1;
+const MIN_NUM=-1e12+1;
 
 function expressionValidation(expStr){
     let expression=expStr;
@@ -162,14 +166,14 @@ function infixToPofix(infix){
     let output=[];
     for(let op of infix){
         //f(op==='('){
-        if(op instanceof parentheses&&op.type==="left"){
+        if(op instanceof parenthesesLeft){
             operatorStack.push(op);
         }
         //else if(op===')'){
-        else if(op instanceof parentheses&&op.type==="right"){
+        else if(op instanceof parenthesesRight){
             while(true){
                 let p=operatorStack.pop();
-                if(p instanceof parentheses&&p.type==="left")break;
+                if(p instanceof parenthesesLeft)break;
                 output.push(p);
             }
         }

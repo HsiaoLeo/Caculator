@@ -78,6 +78,7 @@ class devid extends operator{
         super(2);
     }
     calc(n1,n2){
+        if(n2===0)throw new Error("devide zero!")
         return safeResult(n1/n2);
     }
 }
@@ -112,10 +113,10 @@ function expressionValidation(expStr){
     let matchResult;
     while(matchResult=expression.match(inparenthesesPattern)){
         for(let subExpression of matchResult){
-            if(!basicExpressionPattern.test(subExpression))return false;
+            if(!basicExpressionPattern.test(subExpression))throw new Error("invalid infix!");
             //if(!basicExpressionPattern.test(subExpression))throw new Error("invalid expression");
         }
-        expression=expression.replace(outparenthesesPattern,"0");
+        expression=expression.replace(outparenthesesPattern,"1");
         /*expression=expression.replace(outparenthesesPattern,function(matchStr){
             let infixArr=matchStr.match(inparenthesesPattern)[0].split(expressionSplitPattern);
             return postfixCal(infixToPofix(infixArr));
@@ -123,10 +124,9 @@ function expressionValidation(expStr){
         console.log(expression)*/
     }
     //console.log(expression)
-    if(!basicExpressionPattern.test(expression))return false;
+    if(!basicExpressionPattern.test(expression))throw new Error("invalid infix!");
     //if(!basicExpressionPattern.test(expression))throw new Error("invalid expression");
     //return postfixCal(infixToPofix(expression.split(expressionSplitPattern)));
-    return true;
 }
 function safeResult(result){
     if(result>MAX_NUM)return MAX_NUM;
@@ -218,12 +218,13 @@ function postfixCal(pofix){
 /*entry */
 function caculator(calStr){
     let expressionSpliter=/(?<=[^\.])(?=[^\d\.])|(?<=[^\d\.+-])(?=[^\.])|(?<![^\d].)(?=\.)|(?<=\d[+-])(?=\d)/
-    calStr=calStr.replace(/\s/g,"");
-    if(!expressionValidation(calStr)){
-        alert("invalid infix");
-        throw new Error("invalid infix");
+    try{
+        expressionValidation(calStr)
+        let infixArr=calStr.split(expressionSpliter).map(op=>new ExpressionElement(op));
+        return postfixCal(infixToPofix(infixArr));
     }
-    let infixArr=calStr.split(expressionSpliter).map(op=>new ExpressionElement(op));
-    return postfixCal(infixToPofix(infixArr));
+    catch(ex){
+        throw ex;
+    }
     //return expressionValidation(calStr);
 }

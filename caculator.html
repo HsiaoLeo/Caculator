@@ -5,21 +5,58 @@
         <meta charset="utf-8" />
         <script src="caculator.js"></script>
         <script>
-            window.onload=function(){
-                /*develop test*/
-               /* let expression="( 1 + 2.3 ) ^ 4 * +5";
-                let expression2="( 1 + 2.3 ) ^ 4 * -5";
-                try{
-                    console.log(caculator(expression))
-                    console.log(caculator(expression2))
-                }
-                catch(ex){
-                    console.log(ex.message);
-                }*/
-                document.querySelector("input#input_cal").addEventListener("click",function(){
-                    document.querySelector("span.caculator_result").textContent=caculator(document.querySelector("input#input_infix").value);
-                })
+            function create_result_row(result){
+                let fragment=document.createDocumentFragment();
+                let div=document.createElement("div");
+                let span=document.createElement("span");
+                span.textContent=result;
+                div.appendChild(span);
+                fragment.appendChild(div);
+                return fragment;
             }
+            function insert_resultArea(frag){
+                let resultArea=document.querySelector("div.resultarea");
+                let firstChild=resultArea.querySelector("div:first-child")
+                if(firstChild){
+                    resultArea.insertBefore(frag,firstChild);
+                }
+                else{
+                    resultArea.appendChild(frag);
+                }
+            }
+            function start(){
+                let caculateNBtn=document.querySelector("input#input_cal");
+                let userInputField=document.querySelector("input#input_infix")
+                let nextTurnInput=false;
+                caculateNBtn.addEventListener("click",function(){
+                    let input=userInputField.value.replace(/\s/g,'');
+                    try{
+                        if(!nextTurnInput) insert_resultArea(create_result_row(caculator(input)));
+                    }
+                    catch(ex){
+                        alert(ex.message);
+                        console.error(ex);
+                    }
+                    finally{
+                        nextTurnInput=true;
+                    }
+                })
+                document.addEventListener("keydown",function(e){
+                    if(e.key==="Enter"){
+                        let clickEvent=new Event("click");
+                        caculateNBtn.dispatchEvent(clickEvent);
+                    }
+                    else{
+                        if(nextTurnInput){
+                            userInputField.value="";
+                            userInputField.focus();
+                        }
+                        nextTurnInput=false;
+                    }
+                })
+                userInputField.focus();
+            }
+            window.onload=start;
         </script>
         <link href="caculator.css" rel="stylesheet" />
     </head>
@@ -33,8 +70,10 @@
                 <input id="input_infix" type="text" maxlength="500" />
                 <input id="input_cal" type="button" value="caculate" />
             </div>
-            <div class="row">
-                <span class="caculator_result"></span>
+            <div class="row resultarea">
+                <!-- <div>
+                    <span class="caculator_result"></span>
+                </div> -->
             </div>
         </div>
     </body>
